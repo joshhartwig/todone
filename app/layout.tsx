@@ -1,8 +1,17 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Link from 'next/link';
 import './globals.css'
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] })
+
+const links = [
+  { href: '/', label: 'Home'},
+  { href: '/todos', label: 'Todos'},
+  { href: '/docs', label: 'Docs'},
+  { href: '/about', label: 'About'}
+]
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +25,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <nav className="bg-gray-800 text-white p-4 mx-4 my-2 rounded-lg">
+            <ul className="flex space-x-4">
+              {
+                links.map(link => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="hover:bg-gray-700 p-2 rounded">{link.label}</Link>
+                  </li>
+                ))
+              }
+            </ul>
+        </nav>
+        <div>
+          {children}
+          <Toaster position="top-right" />
+        </div>
+      </body>
     </html>
   )
 }
