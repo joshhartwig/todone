@@ -8,8 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 const links = [
   { href: '/', label: 'Home'},
-  { href: '/todos', label: 'Todos'},
-  { href: '/docs', label: 'Docs'},
+  { href: '/newtodo', label: 'New'},
   { href: '/about', label: 'About'}
 ]
 
@@ -25,18 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <nav className="bg-gray-800 text-white p-4 mx-4 my-2 rounded-lg">
-            <ul className="flex space-x-4">
-              {
-                links.map(link => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:bg-gray-700 p-2 rounded">{link.label}</Link>
-                  </li>
-                ))
-              }
-            </ul>
-        </nav>
+      <body className={`${inter.className}  bg-slate-300`} >
         <div>
           {children}
           <Toaster position="top-right" />
