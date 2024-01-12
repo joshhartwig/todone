@@ -27,6 +27,7 @@ export const addTodo = async (newTodo: unknown) => {
 
     await db.todo.create({
         data: {
+            title: result.data.title,
             content: result.data.content
         }
     })

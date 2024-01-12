@@ -1,34 +1,28 @@
-import NewTodoForm from '@/components/NewTodoForm'
 import { getTodos } from '@/utils/dataAccess'
 import TodoList from "@/components/TodoList"
+import Sidebar from '@/components/Sidebar'
+import Greeting from '@/components/Greeting'
 import Image from 'next/image'
-
-// test function to simulate api call, only used in one chapter
-const getData = async () => {
-  await new Promise((res) => setTimeout(() => res(0),2000))
-  return { data: [1,2,3]}
-}
 
 export default async function Home() {
 
   const todos = await getTodos()
   return (
-    <main className='flex flex-row'>
-      <div>
-        <div className='w-1/4 bg-slate-300 h-full'>
-          <p>Todo:</p>
-          <ul>
-            <li>Create a dedicated new todo modal form</li>
-            <li>Create an intro / welcome that sits on top of todos</li>
-            <li>Create a component that allows you to add multiple tags to todo</li>
-            <li>fix styling</li>
-          </ul>
-        </div>
-      </div>
-      <div className='w-3/4 h-full'>
+    <>
+      <aside className='sidebar flex w-1/6 bg-white rounded-md my-4 mx-4'>
+        <Sidebar />
+      </aside>
+
+      <main className='flex flex-col ml-10'>
+        <section className='greeting'>
+          <Greeting />
+        </section>
+
+        <section className='todos'>
           <TodoList todos={todos} />
-      </div>
-      
+        </section>
     </main>
+    </>
+    
   )
 }
