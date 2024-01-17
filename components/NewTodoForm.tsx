@@ -32,6 +32,7 @@ const NewTodoForm = () => {
     const newTodo = {
       title: formData.get('title'),
       content: formData.get('content'),
+      tags,
     }
     // parse the new todo and validate against the zod schema
     const result = TodoSchema.safeParse(newTodo)

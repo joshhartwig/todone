@@ -1,7 +1,23 @@
 import db from './db'
 
-
+// returns a list of todos including associated tags
 export const getTodos = async () => {
-    return db.todo.findMany({})
+  const todos = await db.todo.findMany({
+    include: {
+      tags: true,
+    },
+  })
+
+  return todos
 }
 
+// returns a list of tags in our database including associated todos
+export const getTags = async () => {
+  const tags = await db.tag.findMany({
+    include: {
+      todos: true,
+    },
+  })
+
+  return tags
+}
