@@ -21,3 +21,13 @@ export const getTags = async () => {
 
   return tags
 }
+
+export const getTodoById = async (id: string) => {
+  const todo = await db.todo.findFirst({
+    where: {
+      id: id,
+    },
+  })
+
+  return todo
+}

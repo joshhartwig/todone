@@ -6,12 +6,34 @@ const variants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
 }
 
-const TodoList = ({ todos, selectedTag }) => {
+interface Tag {
+  id: string
+  name: string
+  todos: Todo[]
+}
+
+interface Todo {
+  id: string
+  title: string
+  createdAt: Date
+  completed: boolean
+  content: string
+  tags: Tag[]
+}
+
+interface TodoListProps {
+  todos: Todo[]
+  selectedTags: string[]
+}
+
+const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
   const filteredTodos = todos.filter((todo) =>
-    selectedTag ? todo.tags.some((tag) => tag.name === selectedTag) : true
+    selectedTags.length > 0
+      ? todo.tags.some((tag) => selectedTags.includes(tag.name))
+      : true
   )
   return (
-    <div className="flex flex-col px-10 py-10 bg-white rounded-lg min-h-[500px] max-h-[500px] w-[500px] overflow-auto">
+    <div className="flex flex-col px-1 py-1 min-h-[500px] max-h-[800px] w-[1200px] overflow-auto">
       {filteredTodos.map((todo) => (
         <motion.div
           key={todo.id}
