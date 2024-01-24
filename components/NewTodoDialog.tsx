@@ -16,22 +16,23 @@ import { Form } from '@/components/ui/form'
 import NewTodoForm from './NewTodoForm'
 
 const NewTodoDialog = ({ open, onOpenChange, onClose, modal }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [Open, setOpen] = useState(false)
 
   const handleClose = () => {
-    setIsOpen(false)
+    if (onOpenChange) {
+      onOpenChange(false)
+    }
+
+    if (onClose) {
+      onClose()
+    }
   }
 
   return (
-    <Dialog
-      open={true}
-      onOpenChange={onOpenChange}
-      onClose={handleClose}
-      modal={modal}
-    >
+    <Dialog open={open} onOpenChange={onOpenChange} modal={true}>
       <DialogTitle>Open</DialogTitle>
       <DialogContent>
-        <NewTodoForm onClose={handleClose} />
+        <NewTodoForm onClose={handleClose} onOpenChange={handleClose} />
       </DialogContent>
     </Dialog>
   )

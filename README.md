@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project started as the base app that is built when you go through the fantastic 'Introduction to Next 14' course by Scott Hendrix. The course has you build a really barebones todo app. I wanted to continue to bolt on features and functionaltiy as well as learn some more advanced features that were not part of the course.
 
 ## Getting Started
 
-First, run the development server:
+Run the dev server
 
 ```bash
 npm run dev
@@ -14,18 +14,17 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the app. The app will initialize an empty sqlite database. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Dependencies
 
-## Learn More
+I used the following tools, packages, etc.. to build this app
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/) - The core framework
+- [Prisma](https://nextjs.org/learn) - ORM and database tooling
+- [Shadcn UI](https://nextjs.org/learn) - UI components 
+- [Zod ](https://nextjs.org/learn) - Data validation and much more
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 

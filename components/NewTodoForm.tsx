@@ -39,7 +39,7 @@ const formSchema = z.object({
   tags: z.string().trim().optional(),
 })
 
-export const NewTodoForm = ({ onClose }) => {
+export const NewTodoForm = ({ onClose, onOpenChange }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
