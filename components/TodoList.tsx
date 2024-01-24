@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Todo from './Todo'
+import NewTodoDialog from './NewTodoDialog'
 
 const variants = {
   hidden: { opacity: 0 },
@@ -27,6 +29,16 @@ interface TodoListProps {
 }
 
 const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const handleOpenDialogClick = () => {
+    setIsDialogOpen(true)
+  }
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+  }
+
   const filteredTodos = todos.filter((todo) =>
     selectedTags.length > 0
       ? todo.tags.some((tag) => selectedTags.includes(tag.name))
@@ -45,6 +57,16 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
           <Todo key={todo.id} todo={todo} />
         </motion.div>
       ))}
+
+      <button onClick={handleOpenDialogClick}>Add New Todo</button>
+
+      {isDialogOpen && (
+        <NewTodoDialog
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          modal={true}
+        />
+      )}
     </div>
   )
 }

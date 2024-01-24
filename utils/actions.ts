@@ -9,33 +9,26 @@ import { create } from 'domain'
     and run code to capture data from the forms
 */
 
+// creates a new todo in the database
 export const addTodo = async (newTodo) => {
-  //server side validation
   const { tags, ...rest } = newTodo
+  const result = TodoSchema.safeParse(newTodo)
+  if (!result.success) {
+    //output error message
+    let error = ''
+    result.error.issues.forEach((issue) => {
+      error = error + issue.path[0] + ':' + issue.message + '. '
+    })
 
-  //   const result = TodoSchema.safeParse(newTodo)
-  //   if (!result.success) {
-  //     //output error message
-  //     let error = ''
-  //     result.error.issues.forEach((issue) => {
-  //       error = error + issue.path[0] + ':' + issue.message + '. '
-  //     })
-
-  //     return {
-  //       error: error,
-  //     }
-  //   }
-
-  //   await db.todo.create({
-  //     data: {
-  //       title: result.data.title,
-  //       content: result.data.content,
-  //     },
-  //   })
+    return {
+      error: error,
+    }
+  }
 
   const createdTodo = await db.todo.create({
     data: {
-      ...rest,
+      title: result.data.title,
+      content: result.data.content,
       tags: {
         connectOrCreate: tags.map((tag) => {
           return {
@@ -47,10 +40,9 @@ export const addTodo = async (newTodo) => {
     },
   })
 
-  console.log(createdTodo)
-
   // this will expire the cache of the todos page and force it to refetch data
   revalidatePath('/todos')
+  return createdTodo
 }
 
 export const completeTodo = async (id: string) => {

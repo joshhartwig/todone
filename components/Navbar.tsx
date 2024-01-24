@@ -7,16 +7,7 @@ const Navbar = () => {
       <div className="">
         <ul className="flex">
           <li className="mr-6">
-            <Link href="/" className="text-gray-500 hover:text-gray-900">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
-              </svg>
-            </Link>
+            <Link href="/" className="text-gray-500 hover:text-gray-900"></Link>
           </li>
           <li className="mr-6">
             <Link href="/" className="text-gray-900 hover:text-gray-400">

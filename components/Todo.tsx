@@ -2,6 +2,7 @@
 import { completeTodo } from '@/utils/actions'
 import Link from 'next/link'
 import { useTransition, ReactElement } from 'react'
+import { Badge } from './ui/badge'
 
 interface Tag {
   id: string
@@ -27,12 +28,9 @@ const Todo = ({ todo }: TodoProps): ReactElement => {
           <p className="text-gray-600 text-sm">{todo.content}</p>
           <div className="flex flex-wrap mt-2">
             {todo.tags.map((tag, idx) => (
-              <span
-                key={idx}
-                className="m-1 border border-slate-400 px-2 py-1 rounded-full bg-slate-400 text-slate-50 text-xs"
-              >
+              <Badge key={idx} variant="outline">
                 {tag.name}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>

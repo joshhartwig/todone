@@ -1,5 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { Button } from './ui/button'
+import { Checkbox } from './ui/checkbox'
 
 interface Tag {
   id: number
@@ -37,26 +39,20 @@ const Sidebar = ({ tags, selectedTags, onTagChange }: SideBarProps) => {
         {tags.map((tag, idx) => (
           <li key={idx}>
             <label className="flex items-center space-x-3 mb-2">
-              <input
-                type="checkbox"
-                value={tag.name}
+              <Checkbox
                 checked={selectedTags.includes(tag.name)}
-                onChange={(e) =>
-                  handleCheckboxChange(tag.name, e.target.checked)
-                }
-                className="form-checkbox h-5 w-5 text-blue-600 rounded-md"
+                onCheckedChange={(checked) => {
+                  handleCheckboxChange(tag.name, checked ? true : false)
+                }}
               />
               <span className="text-gray-900 text-sm">{tag.name}</span>
             </label>
           </li>
         ))}
         <li>
-          <button
-            onClick={handleShowAllTodosClick}
-            className="mt-4 py-2 px-4 bg-gray-700 text-white rounded-md text-sm"
-          >
+          <Button onClick={handleShowAllTodosClick} className="">
             Show All todos
-          </button>
+          </Button>
         </li>
       </ul>
     </div>
