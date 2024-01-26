@@ -60,18 +60,18 @@ export const editTodo = async (id: string, updatedTodo) => {
     }
   }
 
+  const tagRecords = tags.map((tag) => ({ name: tag }))
+
+  // Fetch our todo in the database and update it
   const updatedTodoInDb = await db.todo.update({
     where: { id },
     data: {
-      title: result.data.title,
-      content: result.data.content,
+      ...rest,
       tags: {
-        set: tags.map((tag) => {
-          return {
-            where: { name: tag },
-            create: { name: tag },
-          }
-        }),
+        connectOrCreate: tagRecords.map((tag) => ({
+          where: { name: tag.name },
+          create: tag,
+        })),
       },
     },
   })

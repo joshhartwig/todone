@@ -39,12 +39,18 @@ const formSchema = z.object({
   tags: z.string().trim().optional(),
 })
 
-export const EditTodoForm = ({ onClose, onOpenChange }) => {
+export const EditTodoForm = ({ onClose, onOpenChange, todo }) => {
+  const id = todo.id
+  const [title, setTitle] = useState(todo ? todo.title : '')
+  const [content, setContent] = useState(todo ? todo.content : '')
+  const [tags, setTags] = useState(todo ? todo.tags.map((tag) => tag.name) : [])
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      content: '',
+      title: title,
+      content: content,
+      tags: tags.join(' '),
     },
   })
 
@@ -61,9 +67,9 @@ export const EditTodoForm = ({ onClose, onOpenChange }) => {
     }
 
     try {
-      const result = await addTodo(todo)
+      const result = await editTodo(id, todo)
       if (result) {
-        toast.success('Todo added successfully')
+        toast.success('Todo successfully saved')
         form.reset({
           title: '',
           content: '',
@@ -72,7 +78,7 @@ export const EditTodoForm = ({ onClose, onOpenChange }) => {
         onClose()
       }
     } catch {
-      toast.error('Failed to add todo')
+      toast.error('Failed to save todo')
     }
   }
 
@@ -123,7 +129,7 @@ export const EditTodoForm = ({ onClose, onOpenChange }) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </form>
     </Form>
   )

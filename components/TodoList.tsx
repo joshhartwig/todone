@@ -12,6 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import EditTodoDialog from './EditTodoDialog'
 
 // These control our animation fades
 const variants = {
@@ -43,16 +44,20 @@ interface TodoListProps {
 const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
   const todosPerPage = 5
   const [isNewTodoDialogOpen, setIsNewTodoDialogOpen] = useState(false)
+  const [isEditTodoDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [editTodoId, setEditTodoId] = useState('')
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
 
   // Sets our dialog to open
-  const handleOpenDialogClick = () => {
-    setIsNewTodoDialogOpen(true)
-  }
+  const handleOpenDialogClick = () => setIsNewTodoDialogOpen(true)
 
   // Sets our dialog to close
-  const handleCloseDialog = () => {
-    setIsNewTodoDialogOpen(false)
+  const handleCloseDialog = () => setIsNewTodoDialogOpen(false)
+
+  // Sets or todoID in state as the todo we want to edit & triggers dialog open
+  const handleEditClick = (todoId: string) => {
+    setEditTodoId(todoId)
+    setIsEditDialogOpen(true)
   }
 
   // Filters our todos based on selected tags
@@ -72,9 +77,8 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
   )
 
   // Handle page change
-  const handlePageChange = (newPageNumber: number) => {
+  const handlePageChange = (newPageNumber: number) =>
     setCurrentPageNumber(newPageNumber)
-  }
 
   return (
     <>
@@ -87,7 +91,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
             exit="hidden"
             variants={variants}
           >
-            <Todo key={todo.id} todo={todo} />
+            <Todo key={todo.id} todo={todo} onEditClick={handleEditClick} />
           </motion.div>
         ))}
       </div>
@@ -134,6 +138,15 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
           <NewTodoDialog
             open={isNewTodoDialogOpen}
             onOpenChange={setIsNewTodoDialogOpen}
+            modal={true}
+          />
+        )}
+        {isEditTodoDialogOpen && (
+          <EditTodoDialog
+            open={isEditTodoDialogOpen}
+            onClose={() => setIsEditDialogOpen(false)}
+            onOpenChange={setIsEditDialogOpen}
+            todo={todos.find((todo) => todo.id === editTodoId)}
             modal={true}
           />
         )}

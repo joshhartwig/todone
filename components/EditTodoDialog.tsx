@@ -2,8 +2,6 @@
 import { TodoSchema } from '@/lib/types'
 import { addTodo } from '@/utils/actions'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -12,10 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Form } from '@/components/ui/form'
-import NewTodoForm from './NewTodoForm'
+import EditTodoForm from './EditTodoForm'
 
-const EditTodoDialog = ({ open, onOpenChange, onClose, modal }) => {
+const EditTodoDialog = ({ open, onOpenChange, onClose, modal, todo }) => {
   const [Open, setOpen] = useState(false)
 
   const handleClose = () => {
@@ -32,7 +29,11 @@ const EditTodoDialog = ({ open, onOpenChange, onClose, modal }) => {
     <Dialog open={open} onOpenChange={onOpenChange} modal={true}>
       <DialogTitle>Open</DialogTitle>
       <DialogContent>
-        <NewTodoForm onClose={handleClose} onOpenChange={handleClose} />
+        <EditTodoForm
+          onClose={handleClose}
+          onOpenChange={handleClose}
+          todo={todo}
+        />
       </DialogContent>
     </Dialog>
   )
