@@ -42,17 +42,17 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
   const todosPerPage = 5
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isNewTodoDialogOpen, setIsNewTodoDialogOpen] = useState(false)
   const [currentPageNumber, setCurrentPageNumber] = useState(1)
 
   // Sets our dialog to open
   const handleOpenDialogClick = () => {
-    setIsDialogOpen(true)
+    setIsNewTodoDialogOpen(true)
   }
 
   // Sets our dialog to close
   const handleCloseDialog = () => {
-    setIsDialogOpen(false)
+    setIsNewTodoDialogOpen(false)
   }
 
   // Filters our todos based on selected tags
@@ -130,10 +130,10 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
 
       <div>
         <Button onClick={handleOpenDialogClick}>Add New Todo</Button>
-        {isDialogOpen && (
+        {isNewTodoDialogOpen && (
           <NewTodoDialog
-            open={isDialogOpen}
-            onOpenChange={setIsDialogOpen}
+            open={isNewTodoDialogOpen}
+            onOpenChange={setIsNewTodoDialogOpen}
             modal={true}
           />
         )}
