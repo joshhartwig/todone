@@ -2,7 +2,6 @@
 import { revalidatePath } from 'next/cache'
 import { TodoSchema } from '@/lib/types'
 import db from './db'
-import { create } from 'domain'
 
 /*
     these are server actions, they allows us to hook into the forms
@@ -45,9 +44,11 @@ export const addTodo = async (newTodo) => {
 }
 
 // Edits Todos via the edit form
-export const editTodo = async (id: string, updatedTodo) => {
-  const { tags, ...rest } = updatedTodo
-  const result = TodoSchema.safeParse(updatedTodo)
+export const editTodo = async (id: string, todo) => {
+  const { tags, ...rest } = todo
+
+  // verify the schema
+  const result = TodoSchema.safeParse(todo)
   if (!result.success) {
     //output error message
     let error = ''
@@ -60,24 +61,36 @@ export const editTodo = async (id: string, updatedTodo) => {
     }
   }
 
-  const tagRecords = tags.map((tag) => ({ name: tag }))
+  const currentTodo = await db.todo.findUnique({
+    where: { id },
+    include: { tags: true },
+  })
 
-  // Fetch our todo in the database and update it
-  const updatedTodoInDb = await db.todo.update({
+  // get the names of the current tags
+  const currentTagNames = currentTodo?.tags?.map((tag) => tag.name) || []
+
+  // disconnect all the current tags
+  const disconnectTags = currentTagNames.map((name) => ({ name }))
+
+  const connectOrCreateTags = tags.map((name) => ({
+    where: { name },
+    create: { name },
+  }))
+
+  const updatedTodo = await db.todo.update({
     where: { id },
     data: {
       ...rest,
       tags: {
-        connectOrCreate: tagRecords.map((tag) => ({
-          where: { name: tag.name },
-          create: tag,
-        })),
+        disconnect: disconnectTags,
+        connectOrCreate: connectOrCreateTags,
       },
     },
   })
   // this will expire the cache of the todos page and force it to refetch data
-  revalidatePath('/todos')
-  return updatedTodoInDb
+  cleanOrphanedTags()
+  revalidatePath('/')
+  return updatedTodo
 }
 
 // Marks a todo complete
@@ -91,4 +104,21 @@ export const completeTodo = async (id: string) => {
 
   // this will expire the cache of the todos page and force it to refetch data
   revalidatePath('/todos')
+}
+
+// this cleans up any orphaned tags after an edit if someone deletes a tag
+const cleanOrphanedTags = async () => {
+  const orphans = await db.tag.findMany({
+    where: {
+      todos: {
+        none: {},
+      },
+    },
+  })
+
+  for (const tag of orphans) {
+    await db.tag.delete({
+      where: { id: tag.id },
+    })
+  }
 }
