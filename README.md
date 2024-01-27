@@ -1,6 +1,6 @@
 # Todone
 
-![example image]()
+![example image](https://github.com/joshhartwig/todone/blob/84292a96197a891a34062fddfea128d760b14d85/images/todone.png)
 This project started as the base app that is built when you go through the fantastic 'Introduction to Next 14' course by Scott Hendrix. The course has you build a really barebones todo app. I wanted to continue to bolt on features and functionaltiy as well as learn some more advanced features that were not part of the course.
 
 ## Getting Started
