@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import Sidebar from './Sidebar'
 import TodoList from './TodoList'
-import { getTags, getTodos } from '@/utils/dataAccess'
 import Greeting from './Greeting'
 
 export default function App({ tags, todos }) {
@@ -15,9 +14,6 @@ export default function App({ tags, todos }) {
       setSelectedSidebarTags([])
     }
   }
-
-  //TODO: shfit the data pulling here
-  //TODO: to fix the issue of old tags being stagnant after a tag deletion. After a tag edit, we need a way to unselect everything, repull the tags down fresh
 
   return (
     <div className="flex">

@@ -43,7 +43,7 @@ export const addTodo = async (newTodo) => {
   return createdTodo
 }
 
-// Edits Todos via the edit form
+// Edits a todos, typicalled called from the form after validation
 export const editTodo = async (id: string, todo) => {
   const { tags, ...rest } = todo
 
@@ -66,12 +66,13 @@ export const editTodo = async (id: string, todo) => {
     include: { tags: true },
   })
 
-  // get the names of the current tags
+  // get all tag names
   const currentTagNames = currentTodo?.tags?.map((tag) => tag.name) || []
 
   // disconnect all the current tags
   const disconnectTags = currentTagNames.map((name) => ({ name }))
 
+  // create an object pair for each tag that needs created
   const connectOrCreateTags = tags.map((name) => ({
     where: { name },
     create: { name },
@@ -93,7 +94,7 @@ export const editTodo = async (id: string, todo) => {
   return updatedTodo
 }
 
-// Marks a todo complete
+// Mark a todo complete
 export const completeTodo = async (id: string) => {
   const todo = await db.todo.update({
     where: { id },
@@ -104,6 +105,15 @@ export const completeTodo = async (id: string) => {
 
   // this will expire the cache of the todos page and force it to refetch data
   revalidatePath('/todos')
+}
+
+// Delete a todo based on string id
+export const deleteTodo = async (id: string) => {
+  const todo = await db.todo.delete({
+    where: { id },
+  })
+  cleanOrphanedTags()
+  revalidatePath('/')
 }
 
 // this cleans up any orphaned tags after an edit if someone deletes a tag

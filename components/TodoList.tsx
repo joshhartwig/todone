@@ -13,6 +13,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import EditTodoDialog from './EditTodoDialog'
+import { completeTodo, deleteTodo } from '@/utils/actions'
 
 // These control our animation fades
 const variants = {
@@ -60,6 +61,16 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
     setIsEditDialogOpen(true)
   }
 
+  // Passed on to our todo component when someone presses the trash can
+  const handleCompleteClick = (todoId: string) => {
+    completeTodo(todoId)
+  }
+
+  // Triggers a deletion from the server action
+  const handleDeleteClick = (todoId: string) => {
+    deleteTodo(todoId)
+  }
+
   // Filters our todos based on selected tags
   const filteredTodos = todos.filter((todo) =>
     selectedTags.length > 0
@@ -91,7 +102,13 @@ const TodoList: React.FC<TodoListProps> = ({ todos, selectedTags }) => {
             exit="hidden"
             variants={variants}
           >
-            <Todo key={todo.id} todo={todo} onEditClick={handleEditClick} />
+            <Todo
+              key={todo.id}
+              todo={todo}
+              onEditClick={handleEditClick}
+              onDeleteClick={handleDeleteClick}
+              onCompleteClick={handleCompleteClick}
+            />
           </motion.div>
         ))}
       </div>

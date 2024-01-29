@@ -3,7 +3,12 @@ import { completeTodo } from '@/utils/actions'
 import Link from 'next/link'
 import { useTransition, ReactElement } from 'react'
 import { Badge } from './ui/badge'
-import { IconEdit } from '@tabler/icons-react'
+import {
+  IconEdit,
+  IconSquare,
+  IconSquareCheckFilled,
+  IconTrash,
+} from '@tabler/icons-react'
 
 interface Tag {
   id: string
@@ -15,12 +20,20 @@ interface TodoProps {
     id: string
     title: string
     content: string
+    completed: boolean
     tags: Tag[]
   }
   onEditClick: (todoId: string) => void
+  onCompleteClick: (todoId: string) => void
+  onDeleteClick: (todoId: string) => void
 }
 
-const Todo = ({ todo, onEditClick }: TodoProps): ReactElement => {
+const Todo = ({
+  todo,
+  onEditClick,
+  onCompleteClick,
+  onDeleteClick,
+}: TodoProps): ReactElement => {
   const [isPending, startTransition] = useTransition()
   return (
     <>
@@ -37,9 +50,31 @@ const Todo = ({ todo, onEditClick }: TodoProps): ReactElement => {
           </div>
         </div>
         <div>
-          <button className="" onClick={() => onEditClick(todo.id)}>
+          {todo.completed ? (
+            <button className="mr-2" onClick={() => onCompleteClick(todo.id)}>
+              <span>
+                <IconSquareCheckFilled size={18} />
+              </span>
+            </button>
+          ) : (
+            <button className="mr-2" onClick={() => onCompleteClick(todo.id)}>
+              <span>
+                <IconSquare size={18} />
+              </span>
+            </button>
+          )}
+
+          {/* Edit */}
+          <button className="mr-2" onClick={() => onEditClick(todo.id)}>
             <span>
-              <IconEdit />
+              <IconEdit size={18} />
+            </span>
+          </button>
+
+          {/* Delete */}
+          <button className="mr-2" onClick={() => onDeleteClick(todo.id)}>
+            <span>
+              <IconTrash size={18} />
             </span>
           </button>
         </div>

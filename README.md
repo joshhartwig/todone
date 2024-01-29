@@ -11,6 +11,13 @@ Run the dev server
 npm run dev
 ```
 
+## Todo
+
+- Add priority / due date as well as importance level
+- Light and Dark mode toggle
+- Loading animations 
+- UI for when data does not exist
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the app. The app will initialize an empty sqlite database. 
 
 ## Dependencies
