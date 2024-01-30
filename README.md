@@ -1,7 +1,7 @@
 # Todone
 
 ![example image](https://github.com/joshhartwig/todone/blob/84292a96197a891a34062fddfea128d760b14d85/images/todone.png)
-This project started as the base app that is built when you go through the fantastic 'Introduction to Next 14' course by Scott Hendrix. The course has you build a really barebones todo app. I wanted to continue to bolt on features and functionaltiy as well as learn some more advanced features that were not part of the course.
+This project started as a super simple barebones todo app. The bones of which you build in [Scott Hendrix's FrontEndMaster's Course](https://frontendmasters.com/courses/next-js-v3/). I took those bones and found a design inspiration on [dribbble.com](https://dribbble.com/search/todo-website). I took those bones and tacked on features like animation, database storage, server actions, data validation, tailwind, filtering. I am happy with the result and have a few more features to add before I wrap things up.
 
 ## Getting Started
 
@@ -20,11 +20,12 @@ npm run dev
 - Download of todos via JSON from /api/todos (need to add csv option)
 - Filter by tag
 
-## Todo
+## Todo (no pun intended)
 
-- Add priority / due date as well as importance level
+- Add priority & due date
+- Add sorting (name, completed, date)
 - Light and Dark mode toggle
-- Loading animations 
+- Loading animation
 - UI for when data does not exist
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the app. The app will initialize an empty sqlite database. 
