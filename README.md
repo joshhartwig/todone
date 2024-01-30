@@ -11,6 +11,15 @@ Run the dev server
 npm run dev
 ```
 
+## Features
+
+- Server actions for handling form input
+- Zod for type safety and form verification
+- Tailwind for styling
+- Prisma & SQLlite for ORM and database
+- Download of todos via JSON from /api/todos (need to add csv option)
+- Filter by tag
+
 ## Todo
 
 - Add priority / due date as well as importance level

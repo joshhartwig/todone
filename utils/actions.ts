@@ -73,7 +73,7 @@ export const editTodo = async (id: string, todo) => {
   const disconnectTags = currentTagNames.map((name) => ({ name }))
 
   // create an object pair for each tag that needs created
-  const connectOrCreateTags = tags.map((name) => ({
+  const connectOrCreateTags = tags.map((name: string) => ({
     where: { name },
     create: { name },
   }))
@@ -94,17 +94,25 @@ export const editTodo = async (id: string, todo) => {
   return updatedTodo
 }
 
-// Mark a todo complete
+// Flips the state of complete on todo. Marks complete if not complete and vice versa
 export const completeTodo = async (id: string) => {
+  const currentTodo = await db.todo.findUnique({
+    where: { id },
+  })
+
+  if (!currentTodo) {
+    throw new Error('todo not found')
+  }
+
   const todo = await db.todo.update({
     where: { id },
     data: {
-      completed: true,
+      completed: !currentTodo.completed,
     },
   })
 
   // this will expire the cache of the todos page and force it to refetch data
-  revalidatePath('/todos')
+  revalidatePath('/')
 }
 
 // Delete a todo based on string id
