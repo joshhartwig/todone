@@ -28,7 +28,7 @@ npm run dev
 - Loading animation
 - UI for when data does not exist
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the app. The app will initialize an empty sqlite database. 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the app. The app will initialize an empty sqlite database.
 
 ## Dependencies
 
